@@ -1,0 +1,34 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: condo_user
+      POSTGRES_PASSWORD: condo_pass
+      POSTGRES_DB: condo_db
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  login_service:
+    build: ./Backend/login_service
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgres://condo_user:condo_pass@postgres:5432/condo_db
+      SECRET_KEY: change_me
+    ports:
+      - "8001:8000"
+
+  user_service:
+    build: ./Backend/user_service
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgres://condo_user:condo_pass@postgres:5432/condo_db
+    ports:
+      - "8002:8000"
+
+volumes:
+  pgdata:

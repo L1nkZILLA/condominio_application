@@ -1,0 +1,5 @@
+[Frontend React] <--HTTPS--> [Login Service (Auth, gateway)] <--HTTP--> [User Service]
+                                              \--HTTP--> [Unit Service]
+                                              \--HTTP--> [Reservation Service]
+                                              \--HTTP--> [Visitor Service]
+Postgres (shared or per-service) <- used by services
